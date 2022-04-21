@@ -15,10 +15,24 @@ public class display : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         if(Input.GetKeyDown (KeyCode.I)){
-            Square.SetActive(true);
- }
- else{Square.SetActive(false);}
-        
+         if(Input.GetKeyDown (KeyCode.I))
+         { 
+
+             //release
+            if (!Square.activeSelf) 
+            {Square.SetActive(true);
+                Debug.Log("open");
+            }
+            else {Square.SetActive(false);
+          Debug.Log("close");
+            }
+         }
+         /**
+        if(Input.GetKeyUp (KeyCode.I))
+         {
+            Square.SetActive(false);
+          Debug.Log("gone");
+         }**/
+                
     }
 }
