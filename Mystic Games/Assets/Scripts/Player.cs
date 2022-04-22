@@ -1,28 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    
-    public float moveSpeed = 1f;
-    
-    private Vector2 moveInput;
-    private Rigidbody2D rb;
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthBar healthBar;
 
-    
     // Start is called before the first frame update
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
-    void FixedUpdate(){
-        rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
+    //Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && currentHealth != 0)
+        {
+            TakeDamage(20);
+            Debug.Log(currentHealth);
+        }
     }
 
-    void OnMove(InputValue value){
-        moveInput = value.Get<Vector2>();
+    void TakeDamage(int dmg)
+    {
+        currentHealth -= dmg;
+        healthBar.SetHealth(currentHealth);
     }
 }
