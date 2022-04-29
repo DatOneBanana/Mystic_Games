@@ -5,7 +5,7 @@ using UnityEngine;
 public class display : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject Square;
+    public GameObject Canvas;
 
     // void Start()
     // {
