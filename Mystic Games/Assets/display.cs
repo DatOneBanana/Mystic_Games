@@ -5,7 +5,7 @@ using UnityEngine;
 public class display : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject Square;
+    public GameObject Panel;
 
     // void Start()
     // {
@@ -19,11 +19,11 @@ public class display : MonoBehaviour
          { 
 
              //release
-            if (!Square.activeSelf) 
-            {Square.SetActive(true);
+            if (!Panel.activeSelf) 
+            {Panel.SetActive(true);
                 Debug.Log("open");
             }
-            else {Square.SetActive(false);
+            else {Panel.SetActive(false);
           Debug.Log("close");
             }
          }
