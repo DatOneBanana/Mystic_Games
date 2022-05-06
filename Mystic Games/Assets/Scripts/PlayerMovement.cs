@@ -9,9 +9,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveDelta;
     private RaycastHit2D hit;
     
-    //public float moveSpeed = 5f;
-    //public Rigidbody2D rb;
-    //Vector2 movement;
+    public float moveSpeed = 5f;
+    public Rigidbody2D rb;
+    public Animator animator;
+    Vector2 movement;
 
     void Start()
     {
@@ -22,8 +23,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //movement.x = Input.GetAxisRaw("Horizontal");
-        //movement.y = Input.GetAxisRaw("Vertical");
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Speed", movement.sqrMagnitude);
     }
 
     void FixedUpdate()
@@ -48,6 +53,6 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        //rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime); 
+        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime); 
     }
 }
