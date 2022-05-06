@@ -5,14 +5,12 @@ using UnityEngine;
 public class MapView : MonoBehaviour
 {
     public static bool mapIsOpen = false;
-    public static bool scrollIsOpen = false;
     public GameObject mapUI;
-    public GameObject scrollUI;
+
     // Start is called before the first frame update
     void Start()
     {
         CloseMap();
-        CloseScroll();
     }
 
     // Update is called once per frame
@@ -21,11 +19,9 @@ public class MapView : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.M)) {
             if(mapIsOpen) {
                 CloseMap();
-                CloseScroll();
             }
             else {
                 OpenMap();
-                OpenScroll();
             }
         }
     }
@@ -41,14 +37,4 @@ public class MapView : MonoBehaviour
         mapUI.SetActive(true);
         Time.timeScale = 0f;
     }
-
-    void CloseScroll() {
-        scrollIsOpen = false;
-        scrollUI.SetActive(false);
-    }
-
-    void OpenScroll() {
-        scrollIsOpen = true;
-        scrollUI.SetActive(true);
-    }    
 }
