@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBar healthBar;
+    public int currency = 0;
 
     // Start is called before the first frame update
     private void Start()
@@ -30,4 +31,10 @@ public class Player : MonoBehaviour
         currentHealth -= dmg;
         healthBar.SetHealth(currentHealth);
     }
+
+    public void IncreaseCurrency(int amount)
+    {
+        currency += amount;
+    }
+
 }
