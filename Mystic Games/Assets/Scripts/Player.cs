@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ICustomerShop
 {
     public int maxHealth = 100;
     public int currentHealth;
@@ -35,6 +35,11 @@ public class Player : MonoBehaviour
     public void IncreaseCurrency(int amount)
     {
         currency += amount;
+    }
+
+    public void BoughtItem(Item.ItemType itemType)
+    {
+        Debug.Log("Bought item" + itemType);
     }
 
 }
