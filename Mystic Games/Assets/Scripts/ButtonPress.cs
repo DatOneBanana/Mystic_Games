@@ -1,26 +1,30 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace ButtonUtil {
+namespace ButtonUtil
+{
 
-    public class Button_UI : MonoBehaviour, IPointerClickHandler {
+    public class ButtonPress : MonoBehaviour, IPointerClickHandler
+    {
 
         public Action ClickFunc = null;
-        
+
         public Action<PointerEventData> OnPointerClickFunc;
 
-        public virtual void OnPointerClick(PointerEventData eventData) {
+        public virtual void OnPointerClick(PointerEventData eventData)
+        {
 
-            if (eventData.button == PointerEventData.InputButton.Left) {
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
 
                 if (ClickFunc != null)
                 {
                     ClickFunc();
                 }
             }
-     
+
         }
 
     }

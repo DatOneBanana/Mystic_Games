@@ -39,7 +39,7 @@ public class ShopUI : MonoBehaviour
         shopItemTransform.Find("itemPrice").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
         shopItemTransform.Find("itemImage").GetComponent<Image>().sprite = itemSprite;
 
-        shopItemTransform.GetComponent<Button_UI>().ClickFunc = () => {
+        shopItemTransform.GetComponent<ButtonPress>().ClickFunc = () => {
             // Clicked on shop item button
             BuyItem(itemType);
         };
