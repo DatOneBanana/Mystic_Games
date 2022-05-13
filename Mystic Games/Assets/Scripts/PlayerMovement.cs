@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D boxCollider;
     private Vector3 moveDelta;
     private RaycastHit2D hit;
-    
+    [SerializeField] private UI_Inventory ui_inventory;
+    private Inventory inventory;
     public float moveSpeed = 5f;
     public Rigidbody2D rb;
     public Animator animator;
@@ -16,11 +17,31 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        
         //rb = GetComponent<Rigidbody2D>();
+        
         boxCollider = GetComponent<BoxCollider2D>();
+       
+           inventory = new Inventory();
+        ui_inventory.SetInventory(inventory);
+        
+              
+
+         
     }
 
     // Update is called once per frame
+    private void OnTriggerEnter2D(Collider2D collider){
+        ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
+        if(itemWorld != null)
+        {
+            inventory.AddItem(itemWorld.GetItem());
+            itemWorld.DestroySelf();
+        }
+        
+ 
+
+    }
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
@@ -29,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Speed", movement.sqrMagnitude);
+         
     }
 
     void FixedUpdate()
@@ -54,5 +76,6 @@ public class PlayerMovement : MonoBehaviour
 
 
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime); 
+        
     }
 }

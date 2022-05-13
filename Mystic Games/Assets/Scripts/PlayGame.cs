@@ -7,6 +7,6 @@ public class PlayGame : MonoBehaviour
 {
     public void TutorialToGame()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Health Bar Test");
     }
 }
