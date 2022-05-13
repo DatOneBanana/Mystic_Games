@@ -94,6 +94,7 @@ public class BattleSystem : MonoBehaviour
         if(state == BattleState.VICTORY) 
         {
             dialogueText.text = "Victory!";
+            LevelLoader.instance.LoadLevel("Copy of Health Bar Test");
         }
         else if(state == BattleState.DEFEAT) 
         {

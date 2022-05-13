@@ -30,4 +30,12 @@ public class Player : MonoBehaviour
         currentHealth -= dmg;
         healthBar.SetHealth(currentHealth);
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "Enemy")
+        {
+            LevelLoader.instance.LoadLevel("BattleArena");
+        }
+    }
 }
