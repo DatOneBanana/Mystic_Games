@@ -6,7 +6,7 @@ using TMPro;
 
 public class BattleHUD : MonoBehaviour
 {
-    public TMP_Text name;
+    new public TMP_Text name;
     public Slider healthSlider;
 
     public void SetHUD(CharacterCombatStatus status)

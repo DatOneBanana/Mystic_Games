@@ -50,9 +50,10 @@ public class BattleSystem : MonoBehaviour
         PlayerTurn();
     }
 
-    IEnumerator PlayerAttack()
+    IEnumerator PlayerAttack(/*CharacterCombatStatus.Type type*/)
     {
-        bool isDead = enemyStat.TakeDamage(playerStat.damage);
+        dialogueText.text = "You attack " + enemyStat.charName;
+        bool isDead = enemyStat.TakeDamage(playerStat.damage, playerStat.type);
         enemyHUD.SetHealth(enemyStat.currHealth);
 
         yield return new WaitForSeconds(2f);
@@ -72,7 +73,7 @@ public class BattleSystem : MonoBehaviour
     {
         dialogueText.text = enemyStat.charName + " attacks you!";
 
-        bool isDead = playerStat.TakeDamage(enemyStat.damage);
+        bool isDead = playerStat.TakeDamage(enemyStat.damage, enemyStat.type);
         playerHUD.SetHealth(playerStat.currHealth);
 
         yield return new WaitForSeconds(2f);
@@ -94,7 +95,7 @@ public class BattleSystem : MonoBehaviour
         if(state == BattleState.VICTORY) 
         {
             dialogueText.text = "Victory!";
-            LevelLoader.instance.LoadLevel("Copy of Health Bar Test");
+            LevelLoader.instance.LoadLevel("Brandon");
         }
         else if(state == BattleState.DEFEAT) 
         {
