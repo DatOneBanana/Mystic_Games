@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 
     public int maxMana = 100;
     public int currentMana;
-    public ManaBar manaBar;
+    //public ManaBar manaBar;
 
     // Start is called before the first frame update
     private void Start()
@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
 
         currentMana = maxMana;
-        manaBar.SetMaxMana(maxMana);
+      //  manaBar.SetMaxMana(maxMana);
     }
 
     //Update is called once per frame
@@ -48,14 +48,14 @@ public class Player : MonoBehaviour
     void UseMana(int m)
     {
         currentMana -= m;
-        manaBar.SetMana(currentMana);
+      //  manaBar.SetMana(currentMana);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Enemy")
         {
-            LevelLoader.instance.LoadLevel("BattleArena");
+           LevelLoader.instance.LoadLevel("BattleArena");
         }
     }
 }

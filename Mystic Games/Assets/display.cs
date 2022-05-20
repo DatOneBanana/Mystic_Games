@@ -5,25 +5,32 @@ using UnityEngine;
 public class display : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject Panel;
-
-    // void Start()
-    // {
-    //     //Square.show = false;
-    // }
+    public GameObject Inventory;
+  //   private Inventory inventory;
+  //  //chanfes get updated
+  //  private Transform itemContainer;
+  //  private Transform itemContainerTemplate;
+    void Start()
+    {
+      
+    }
 
     // Update is called once per frame
     void Update()
     {
+      
          if(Input.GetKeyDown (KeyCode.I))
          { 
-
+            
              //release
-            if (!Panel.activeSelf) 
-            {Panel.SetActive(true);
+            if (!Inventory.activeSelf) 
+            {Inventory.SetActive(true);
+          // Panel.transform.GetChild(1).gameObject.SetActive(true);
                 Debug.Log("open");
+
             }
-            else {Panel.SetActive(false);
+            else {Inventory.SetActive(false);
+            
           Debug.Log("close");
             }
          }

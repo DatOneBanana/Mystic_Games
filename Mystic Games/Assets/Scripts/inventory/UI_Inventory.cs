@@ -11,7 +11,7 @@ public class UI_Inventory : MonoBehaviour
    private Transform itemContainer;
    private Transform itemContainerTemplate;
 
-   public void Awake(){
+   public void Start(){
        itemContainer = transform.Find("itemContainer");
        itemContainerTemplate = itemContainer.Find("itemContainerTemplate");
    }
