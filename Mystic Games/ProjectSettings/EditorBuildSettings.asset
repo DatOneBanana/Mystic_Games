@@ -6,24 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Health Bar Test.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/Game.unity
-    guid: 611a017a5b056f949a3b7032d74a817f
-  - enabled: 1
-    path: Assets/Scenes/Map.unity
-    guid: ee6992c093f993140b0d79e62377650c
-  - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: c128be5962c723d4fade0a3d9efe85fb
-  - enabled: 1
-    path: Assets/Scenes/Play Tutorial.unity
-    guid: a7fee2a5dffe98347b9942c56d5df0af
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: 324d0501ee8976b45af066163cc9a084
   - enabled: 1
     path: Assets/Scenes/BattleArena.unity
     guid: 5298551934ea6c14fbfce3bffed48406
+  - enabled: 1
+    path: Assets/Scenes/Brandon.unity
+    guid: b0548ac1c5300bc4394f3f8147dad494
+  - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: 538e4a19f31c9754e83c3d9a3949961b
   m_configObjects: {}

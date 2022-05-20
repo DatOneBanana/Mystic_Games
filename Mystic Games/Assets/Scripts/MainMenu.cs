@@ -19,6 +19,11 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Health Bar Test");
+        SceneManager.LoadScene("Brandon");
+    }
+
+    public void Settings()
+    {
+        SceneManager.LoadScene("Settings");
     }
 }
