@@ -28,8 +28,9 @@ public class PlayerMovement : MonoBehaviour
         
         boxCollider = GetComponent<BoxCollider2D>();
        
-        inventory = new Inventory();
-        ui_inventory.SetInventory(inventory);
+        //inventory = new Inventory();
+        //ui_inventory.SetInventory(inventory);
+        
 
         //transform.position = waypoints[waypointIndex].transform.position;
     }
