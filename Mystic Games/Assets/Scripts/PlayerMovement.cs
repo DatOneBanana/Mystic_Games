@@ -15,19 +15,23 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     Vector2 movement;
 
+    /*[SerializeField]
+    Transform[] waypoints;
+
+    [SerializeField]
+    float teleportSpeed = 2f;
+    int waypointIndex = 0;*/
+
     void Start()
     {
-        
         //rb = GetComponent<Rigidbody2D>();
         
         boxCollider = GetComponent<BoxCollider2D>();
        
-           inventory = new Inventory();
+        inventory = new Inventory();
         ui_inventory.SetInventory(inventory);
-        
-              
 
-         
+        //transform.position = waypoints[waypointIndex].transform.position;
     }
 
     // Update is called once per frame
@@ -38,9 +42,6 @@ public class PlayerMovement : MonoBehaviour
             inventory.AddItem(itemWorld.GetItem());
             itemWorld.DestroySelf();
         }
-        
- 
-
     }
     void Update()
     {
@@ -50,8 +51,25 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Speed", movement.sqrMagnitude);
+
+        //Move();
          
     }
+
+    /*void Move()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, waypoints[waypointIndex].transform.position, teleportSpeed * Time.deltaTime);
+
+        if (transform.position == waypoints[waypointIndex].transform.position)
+        {
+            waypointIndex += 1;
+        }
+
+        if (waypointIndex == waypoints.Length)
+        {
+            waypointIndex = 0;
+        }
+    }*/
 
     void FixedUpdate()
     {
