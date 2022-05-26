@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ICustomerShop
 {
     public int maxHealth = 100;
     public int currentHealth;
@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     public int currentMana;
     public ManaBar manaBar;
 
+    public int currency = 0;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -19,7 +21,7 @@ public class Player : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
 
         currentMana = maxMana;
-        manaBar.SetMaxMana(maxMana);
+        //manaBar.SetMaxMana(maxMana);
     }
 
     //Update is called once per frame
@@ -78,5 +80,15 @@ public class Player : MonoBehaviour
         position.z = data.position[2];
 
         transform.position = position;
+    }
+
+    public void IncreaseCurrency(int amount)
+    {
+        currency += amount;
+    }
+
+    public void BoughtItem(Weapons.ItemType itemType)
+    {
+        Debug.Log("Bought item" + itemType);
     }
 }
