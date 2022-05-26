@@ -69,6 +69,7 @@ public class Player : MonoBehaviour
         PlayerData data = SaveSystem.LoadPlayer();
 
         currentHealth = data.health;
+        healthBar.SetHealth(currentHealth);
         currentMana = data.mana;
 
         Vector3 position;
