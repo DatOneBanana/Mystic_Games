@@ -15,6 +15,10 @@ public class LevelLoader : MonoBehaviour
     }
     #endregion
 
+    public GameObject music;
+    public GameObject healthBar;
+    public GameObject manaBar;
+
     public Animator transition;
     public float transitionTime = 1f;
 
@@ -30,10 +34,42 @@ public class LevelLoader : MonoBehaviour
 
         yield return new WaitForSeconds(transitionTime);
 
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
 
         //Ends animation for transition
         transition.SetTrigger("End");
         
+    }
+
+    public void UnloadLevel(string sceneName)
+    {
+        StartCoroutine(UnloadNamedLevel(sceneName));
+    }
+
+    IEnumerator UnloadNamedLevel(string sceneName)
+    {
+        //Starts animation for transition
+        transition.SetTrigger("Start");
+
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.UnloadSceneAsync(sceneName);
+
+        //Ends animation for transition
+        transition.SetTrigger("End");
+    }
+
+    public void DisableSceneUI()
+    {
+        music.SetActive(false);
+        healthBar.SetActive(false);
+        manaBar.SetActive(false);
+    }
+
+    public void EnableSceneUI()
+    {
+        music.SetActive(true);
+        healthBar.SetActive(true);
+        manaBar.SetActive(true);
     }
 }

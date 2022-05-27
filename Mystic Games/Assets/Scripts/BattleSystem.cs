@@ -28,6 +28,9 @@ public class BattleSystem : MonoBehaviour
     void Start()
     {
         state = BattleState.START;
+        if(GameObject.Find("Player") != null) {
+            Debug.Log("Player found");
+        }
         StartCoroutine(SetupBattle());
     }
 
@@ -73,6 +76,7 @@ public class BattleSystem : MonoBehaviour
         dialogueText.text = enemyStat.charName + " attacks you!";
 
         bool isDead = playerStat.TakeDamage(enemyStat.damage);
+        GameObject.FindWithTag("Player").GetComponent<CharacterCombatStatus>().TakeDamage(enemyStat.damage);
         playerHUD.SetHealth(playerStat.currHealth);
 
         yield return new WaitForSeconds(2f);
@@ -94,7 +98,8 @@ public class BattleSystem : MonoBehaviour
         if(state == BattleState.VICTORY) 
         {
             dialogueText.text = "Victory!";
-            LevelLoader.instance.LoadLevel("Copy of Health Bar Test");
+            LevelLoader.instance.EnableSceneUI();
+            LevelLoader.instance.UnloadLevel("BattleArena");
         }
         else if(state == BattleState.DEFEAT) 
         {

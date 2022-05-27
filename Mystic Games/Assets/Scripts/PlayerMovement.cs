@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
     Vector2 movement;
+    private bool isBattling = false;
 
     /*[SerializeField]
     Transform[] waypoints;
@@ -46,12 +47,15 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        if(!isBattling)
+        {
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
 
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Vertical", movement.y);
-        animator.SetFloat("Speed", movement.sqrMagnitude);
+            animator.SetFloat("Horizontal", movement.x);
+            animator.SetFloat("Vertical", movement.y);
+            animator.SetFloat("Speed", movement.sqrMagnitude);
+        }
 
         //Move();
          
@@ -96,5 +100,15 @@ public class PlayerMovement : MonoBehaviour
 
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime); 
         
+    }
+
+    public void StopMovement()
+    {
+        isBattling = true;
+    }
+
+    public void ContinueMovement()
+    {
+        isBattling = false;
     }
 }
