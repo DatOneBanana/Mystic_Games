@@ -83,7 +83,9 @@ public class BattleSystem : MonoBehaviour
     {
         dialogueText.text = enemyStat.charName + " attacks you!";
 
+        //Changed isDead directly to have stat type
         bool isDead = playerStat.TakeDamage(enemyStat.damage, enemyStat.type);
+        //Added GameObject.Find from scene perseverance code in attempt to fix conflicts
         GameObject.FindWithTag("Player").GetComponent<CharacterCombatStatus>().TakeDamage(enemyStat.damage);
         playerHUD.SetHealth(playerStat.currHealth);
 
