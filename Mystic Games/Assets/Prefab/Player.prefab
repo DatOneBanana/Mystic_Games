@@ -46,9 +46,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charName: Player
+  weapon: 0
   damage: 15
   maxHealth: 100
   currHealth: 80
+  maxMana: 0
+  currMana: 0
+  type: 5
 --- !u!1 &4220504150519458689
 GameObject:
   m_ObjectHideFlags: 0
