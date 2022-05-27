@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public enum BattleState {START, PLAYERTURN, ENEMYTURN, VICTORY, DEFEAT}
@@ -50,11 +51,21 @@ public class BattleSystem : MonoBehaviour
         PlayerTurn();
     }
 
-    IEnumerator PlayerAttack()
+    IEnumerator PlayerAttack(Type type)
     {
-        bool isDead = enemyStat.TakeDamage(playerStat.damage);
+        dialogueText.text = "You attack " + enemyStat.charName;
+        bool isDead = enemyStat.TakeDamage(playerStat.damage, type);
         enemyHUD.SetHealth(enemyStat.currHealth);
 
+        yield return new WaitForSeconds(2f);
+        if(enemyStat.TypeAdvantage(type))
+        {
+            dialogueText.text = type.ToString() + " is powerful against the enemy.";
+        }
+        else if(enemyStat.TypeDisadvantage(type))
+        {
+            dialogueText.text = type.ToString() + " is weak against the enemy.";
+        }
         yield return new WaitForSeconds(2f);
 
         if(isDead)
@@ -72,10 +83,10 @@ public class BattleSystem : MonoBehaviour
     {
         dialogueText.text = enemyStat.charName + " attacks you!";
 
-        bool isDead = playerStat.TakeDamage(enemyStat.damage);
+        bool isDead = playerStat.TakeDamage(enemyStat.damage, enemyStat.type);
         playerHUD.SetHealth(playerStat.currHealth);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         if(isDead)
         {
@@ -94,7 +105,7 @@ public class BattleSystem : MonoBehaviour
         if(state == BattleState.VICTORY) 
         {
             dialogueText.text = "Victory!";
-            LevelLoader.instance.LoadLevel("Copy of Health Bar Test");
+            LevelLoader.instance.LoadLevel("Brandon");
         }
         else if(state == BattleState.DEFEAT) 
         {
@@ -109,11 +120,42 @@ public class BattleSystem : MonoBehaviour
 
     public void OnAttackButton()
     {
+        //call battlehud function to set buttons active
+        Debug.Log("calling OpenMenu");
+        playerHUD.OpenMenu();
+    }
+
+    public void AttackSelected()
+    {
         if (state != BattleState.PLAYERTURN)
         {
             return;
         }
         state = BattleState.ENEMYTURN;
-        StartCoroutine(PlayerAttack());
+        string x = EventSystem.current.currentSelectedGameObject.name;
+        Type type = Type.Water;
+
+        if(x == "Water") 
+        {
+            type = Type.Water;
+        }
+        else if(x == "Fire")
+        {
+            type = Type.Fire;
+        }
+        else if(x == "Wood")
+        {
+            type = Type.Wood;
+        }
+        else if(x == "Earth")
+        {
+            type = Type.Earth;
+        }
+        else if(x == "Metal")
+        {
+            type = Type.Metal;
+        }
+        playerHUD.OpenMenu();
+        StartCoroutine(PlayerAttack(type));
     }
 }
