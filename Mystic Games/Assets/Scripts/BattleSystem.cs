@@ -84,6 +84,7 @@ public class BattleSystem : MonoBehaviour
         dialogueText.text = enemyStat.charName + " attacks you!";
 
         bool isDead = playerStat.TakeDamage(enemyStat.damage, enemyStat.type);
+        GameObject.FindWithTag("Player").GetComponent<CharacterCombatStatus>().TakeDamage(enemyStat.damage);
         playerHUD.SetHealth(playerStat.currHealth);
 
         yield return new WaitForSeconds(3f);
