@@ -10,7 +10,7 @@ public class Player : MonoBehaviour, ICustomerShop
 
     public int maxMana = 100;
     public int currentMana;
-    //public ManaBar manaBar;
+    public ManaBar manaBar;
 
     public int currency = 0;
 
@@ -21,9 +21,7 @@ public class Player : MonoBehaviour, ICustomerShop
         healthBar.SetMaxHealth(maxHealth);
 
         currentMana = maxMana;
-
         //manaBar.SetMaxMana(maxMana);
-
     }
 
     //Update is called once per frame
@@ -52,14 +50,14 @@ public class Player : MonoBehaviour, ICustomerShop
     void UseMana(int m)
     {
         currentMana -= m;
-      //  manaBar.SetMana(currentMana);
+        manaBar.SetMana(currentMana);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Enemy")
         {
-           LevelLoader.instance.LoadLevel("BattleArena");
+            LevelLoader.instance.LoadLevel("BattleArena");
         }
     }
     

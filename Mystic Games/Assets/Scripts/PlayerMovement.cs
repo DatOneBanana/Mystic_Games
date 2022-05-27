@@ -15,14 +15,11 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     Vector2 movement;
 
-
     /*[SerializeField]
     Transform[] waypoints;
-
     [SerializeField]
     float teleportSpeed = 2f;
     int waypointIndex = 0;*/
-
 
     void Start()
     {
@@ -33,8 +30,6 @@ public class PlayerMovement : MonoBehaviour
         //inventory = new Inventory();
         //ui_inventory.SetInventory(inventory);
         
-
-
 
         //transform.position = waypoints[waypointIndex].transform.position;
     }
@@ -60,28 +55,19 @@ public class PlayerMovement : MonoBehaviour
         //Move();
          
     }
-    //static motion
-    private void DisablePlayerMovement(){
-        animator.enabled = false;
-        rb.bodyType = RigidbodyType2D.Static;
-    }
-
 
     /*void Move()
     {
         transform.position = Vector2.MoveTowards(transform.position, waypoints[waypointIndex].transform.position, teleportSpeed * Time.deltaTime);
-
         if (transform.position == waypoints[waypointIndex].transform.position)
         {
             waypointIndex += 1;
         }
-
         if (waypointIndex == waypoints.Length)
         {
             waypointIndex = 0;
         }
     }*/
-
 
     void FixedUpdate()
     {
