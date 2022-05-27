@@ -15,6 +15,14 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     Vector2 movement;
 
+    private void OnEnable()
+    {
+        HealthBar.onPlayerDeath += DisablePlayerMovement;
+    }
+    private void OnDisable()
+    {
+        HealthBar.onPlayerDeath -= DisablePlayerMovement;
+    }
     void Start()
     {
         
@@ -25,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
            inventory = new Inventory();
         ui_inventory.SetInventory(inventory);
         
-              
+            EnablePlayerMovement();
 
          
     }
@@ -52,7 +60,16 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Speed", movement.sqrMagnitude);
          
     }
+    //static motion
+    private void DisablePlayerMovement(){
+        animator.enabled = false;
+        rb.bodyType = RigidbodyType2D.Static;
+    }
 
+     private void EnablePlayerMovement(){
+        animator.enabled = false;
+        rb.bodyType = RigidbodyType2D.Dynamic;
+    }
     void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");

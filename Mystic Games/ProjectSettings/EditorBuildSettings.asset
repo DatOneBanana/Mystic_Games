@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BattleArena.unity
     guid: 5298551934ea6c14fbfce3bffed48406
+  - enabled: 1
+    path: Assets/Scenes/Game_1.unity
+    guid: 78b870aadb7f79b4a9021beb66396f98
+  - enabled: 1
+    path: Assets/Scenes/Inventory.unity
+    guid: ba907cf6db7c08c4ab5950c8e90c2b8f
   m_configObjects: {}
