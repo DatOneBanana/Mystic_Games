@@ -15,27 +15,28 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     Vector2 movement;
 
-    private void OnEnable()
-    {
-        HealthBar.onPlayerDeath += DisablePlayerMovement;
-    }
-    private void OnDisable()
-    {
-        HealthBar.onPlayerDeath -= DisablePlayerMovement;
-    }
+
+    /*[SerializeField]
+    Transform[] waypoints;
+
+    [SerializeField]
+    float teleportSpeed = 2f;
+    int waypointIndex = 0;*/
+
+
     void Start()
     {
-        
         //rb = GetComponent<Rigidbody2D>();
         
         boxCollider = GetComponent<BoxCollider2D>();
        
-           inventory = new Inventory();
-        ui_inventory.SetInventory(inventory);
+        //inventory = new Inventory();
+        //ui_inventory.SetInventory(inventory);
         
-            EnablePlayerMovement();
 
-         
+
+
+        //transform.position = waypoints[waypointIndex].transform.position;
     }
 
     // Update is called once per frame
@@ -46,9 +47,6 @@ public class PlayerMovement : MonoBehaviour
             inventory.AddItem(itemWorld.GetItem());
             itemWorld.DestroySelf();
         }
-        
- 
-
     }
     void Update()
     {
@@ -58,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Speed", movement.sqrMagnitude);
+
+        //Move();
          
     }
     //static motion
@@ -66,10 +66,23 @@ public class PlayerMovement : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Static;
     }
 
-     private void EnablePlayerMovement(){
-        animator.enabled = false;
-        rb.bodyType = RigidbodyType2D.Dynamic;
-    }
+
+    /*void Move()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, waypoints[waypointIndex].transform.position, teleportSpeed * Time.deltaTime);
+
+        if (transform.position == waypoints[waypointIndex].transform.position)
+        {
+            waypointIndex += 1;
+        }
+
+        if (waypointIndex == waypoints.Length)
+        {
+            waypointIndex = 0;
+        }
+    }*/
+
+
     void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");
