@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Type {Water, Fire, Earth, Wood, Metal}
+public enum Type {Water, Fire, Earth, Wood, Metal, None}
 
 public class CharacterCombatStatus : MonoBehaviour 
 {
     public string charName = "name";
 
+    public Weapons.ItemType weapon;
     public int damage;
 
     public int maxHealth;
