@@ -39,6 +39,7 @@ public class Player : MonoBehaviour, ICustomerShop
             UseMana(10);
             Debug.Log(currentMana);
         }
+        //Debug.Log(playerStatus.currHealth);
     }
 
     void TakeDamage(int dmg)
@@ -53,11 +54,16 @@ public class Player : MonoBehaviour, ICustomerShop
         manaBar.SetMana(currentMana);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    IEnumerator OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Enemy")
-        {
+        {  
+            LevelLoader.instance.DisableSceneUI();
             LevelLoader.instance.LoadLevel("BattleArena");
+
+            yield return new WaitForSeconds(2f);
+
+            Destroy(other.gameObject);
         }
     }
     
