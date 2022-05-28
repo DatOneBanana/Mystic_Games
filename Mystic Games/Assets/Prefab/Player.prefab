@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1805578054298022434}
-  - component: {fileID: 1805578054298022461}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -33,26 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1805578054298022461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1805578054298022460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf1f17d294193fd4b81786856bce287d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  charName: Player
-  weapon: 0
-  damage: 15
-  maxHealth: 100
-  currHealth: 80
-  maxMana: 0
-  currMana: 0
-  type: 5
 --- !u!1 &4220504150519458689
 GameObject:
   m_ObjectHideFlags: 0
