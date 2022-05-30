@@ -25,6 +25,9 @@ public class BattleSystem : MonoBehaviour
 
     public TMP_Text dialogueText;
 
+    private bool isPlayerDefending = false;
+    private bool isEnemyDefending = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +40,8 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator SetupBattle()
     {
-        GameObject player = Instantiate(playerPrefab, playerBattleLocation);
+        GameObject player = GameObject.FindWithTag("Player");
+        Instantiate(playerPrefab, playerBattleLocation);
         playerStat = player.GetComponent<CharacterCombatStatus>();
 
         GameObject enemy = Instantiate(enemyPrefab, enemyBattleLocation);
@@ -56,52 +60,154 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerAttack(Type type)
     {
-        dialogueText.text = "You attack " + enemyStat.charName;
-        bool isDead = enemyStat.TakeDamage(playerStat.damage, type);
-        enemyHUD.SetHealth(enemyStat.currHealth);
+        if(Random.Range(1,101) <= playerStat.missChance)
+        {
+            dialogueText.text = "You missed your attack!";
 
-        yield return new WaitForSeconds(2f);
-        if(enemyStat.TypeAdvantage(type))
-        {
-            dialogueText.text = type.ToString() + " is powerful against the enemy.";
-        }
-        else if(enemyStat.TypeDisadvantage(type))
-        {
-            dialogueText.text = type.ToString() + " is weak against the enemy.";
-        }
-        yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(3f);
 
-        if(isDead)
-        {
-            state = BattleState.VICTORY;
-            EndBattle();
+            EnemyTurn();
         }
         else
         {
-            StartCoroutine(EnemyTurn());
+            dialogueText.text = "You attack " + enemyStat.charName;
+            bool isDead = false;
+
+            if(isEnemyDefending)
+            {
+                isDead = enemyStat.TakeDamage(playerStat.damage / 2, type);
+            }
+            else
+            {
+                isDead = enemyStat.TakeDamage(playerStat.damage, type);
+            }
+            
+            enemyHUD.SetHealth(enemyStat.currHealth);
+
+            yield return new WaitForSeconds(2f);
+            if(enemyStat.TypeAdvantage(type))
+            {
+                dialogueText.text = type.ToString() + " is powerful against the enemy.";
+            }
+            else if(enemyStat.TypeDisadvantage(type))
+            {
+                dialogueText.text = type.ToString() + " is weak against the enemy.";
+            }
+            yield return new WaitForSeconds(2f);
+
+            if(isDead)
+            {
+                state = BattleState.VICTORY;
+                EndBattle();
+            }
+            else
+            {
+                EnemyTurn();
+            }
         }
     }
 
-    IEnumerator EnemyTurn()
+    //Randomly chooses attack (1), defense (2), or heal (3)
+    public void EnemyTurn()
     {
-        dialogueText.text = enemyStat.charName + " attacks you!";
-
-        bool isDead = playerStat.TakeDamage(enemyStat.damage, enemyStat.type);
-        GameObject.FindWithTag("Player").GetComponent<CharacterCombatStatus>().TakeDamage(enemyStat.damage, enemyStat.type);
-        playerHUD.SetHealth(playerStat.currHealth);
-
-        yield return new WaitForSeconds(3f);
-
-        if(isDead)
+        isEnemyDefending = false;
+        int roll;
+        if(enemyStat.currHealth < 0.5 * enemyStat.maxHealth)
         {
-            state = BattleState.DEFEAT;
-            EndBattle();
+            roll = Random.Range(1,4);
+            Debug.Log("Enemy chose: " + roll);
+            if(roll == 1)
+            {
+                StartCoroutine(EnemyAttack());
+            }
+            else if(roll == 2)
+            {
+                StartCoroutine(EnemyDefend());
+            }
+            else
+            {
+                StartCoroutine(EnemyHeal());
+            }
         }
         else
         {
+            roll = Random.Range(1,3);
+            Debug.Log("Enemy chose: " + roll);
+            if(roll == 1)
+            {
+                StartCoroutine(EnemyAttack());
+            }
+            else
+            {
+                StartCoroutine(EnemyDefend());
+            }
+        }
+    }
+
+    IEnumerator EnemyAttack()
+    {
+        if(Random.Range(1,101) <= enemyStat.missChance)
+        {
+            dialogueText.text = enemyStat.charName + " missed their attack!";
+
+            yield return new WaitForSeconds(3f);
+
             state = BattleState.PLAYERTURN;
             PlayerTurn();
         }
+        else 
+        {
+            dialogueText.text = enemyStat.charName + " attacks you!";
+
+            bool isDead = false;
+
+            if(isPlayerDefending)
+            {
+                isDead = playerStat.TakeDamage(enemyStat.damage / 2, enemyStat.type);
+            }
+            else
+            {
+                isDead = playerStat.TakeDamage(enemyStat.damage, enemyStat.type);
+            }
+            
+            playerHUD.SetHealth(playerStat.currHealth);
+
+            yield return new WaitForSeconds(3f);
+
+            if(isDead)
+            {
+                state = BattleState.DEFEAT;
+                EndBattle();
+            }
+            else
+            {
+                state = BattleState.PLAYERTURN;
+                PlayerTurn();
+            }
+        }
+    }
+
+    IEnumerator EnemyHeal()
+    {
+        dialogueText.text = enemyStat.charName + " heals themselves!";
+        enemyStat.Heal();
+        enemyHUD.SetHealth(enemyStat.currHealth);
+
+        yield return new WaitForSeconds(4f);
+
+        state = BattleState.PLAYERTURN;
+        PlayerTurn();
+    }
+
+    IEnumerator EnemyDefend()
+    {
+        dialogueText.text = enemyStat.charName + " braces themselves for the next attack!";
+        isEnemyDefending = true;
+
+        yield return new WaitForSeconds(4f);
+
+        state = BattleState.PLAYERTURN;
+        PlayerTurn();
     }
 
     void EndBattle()
@@ -120,6 +226,7 @@ public class BattleSystem : MonoBehaviour
 
     void PlayerTurn()
     {
+        isPlayerDefending = false;
         dialogueText.text = "Pick an action: ";
     }
 
@@ -162,5 +269,46 @@ public class BattleSystem : MonoBehaviour
         }
         playerHUD.OpenMenu();
         StartCoroutine(PlayerAttack(type));
+    }
+
+    public void OnHealButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+        {
+            return;
+        }
+        state = BattleState.ENEMYTURN;
+        StartCoroutine(PlayerHeal());
+    }
+
+    IEnumerator PlayerHeal()
+    {
+        dialogueText.text = "You heal yourself!";
+        playerStat.Heal();
+        playerHUD.SetHealth(playerStat.currHealth);
+
+        yield return new WaitForSeconds(4f);
+
+        EnemyTurn();
+    }
+
+    public void OnDefendButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+        {
+            return;
+        }
+        state = BattleState.ENEMYTURN;
+        StartCoroutine(PlayerDefend());
+    }
+
+    IEnumerator PlayerDefend()
+    {
+        dialogueText.text = "You brace yourself for the next attack!";
+        isPlayerDefending = true;
+
+        yield return new WaitForSeconds(4f);
+
+        EnemyTurn();
     }
 }

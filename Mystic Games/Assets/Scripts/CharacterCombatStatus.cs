@@ -19,11 +19,14 @@ public class CharacterCombatStatus : MonoBehaviour
 
     public Type type;
 
+    public int missChance;
+
     public bool TakeDamage(int dmg, Type attackingType)
     {
+        int damage = (int)(Random.Range(0.75f, 1.25f) * dmg);
         if(TypeAdvantage(attackingType)) {
-            dmg *= 2;
-            currHealth -= dmg;
+            damage *= 2;
+            currHealth -= damage;
             if (currHealth <= 0)
             {
                 return true;
@@ -34,8 +37,8 @@ public class CharacterCombatStatus : MonoBehaviour
             }
         }
         else if(TypeDisadvantage(attackingType)) {
-            dmg /= 2;
-            currHealth -= dmg;
+            damage /= 2;
+            currHealth -= damage;
             if (currHealth <= 0)
             {
                 return true;
@@ -45,7 +48,7 @@ public class CharacterCombatStatus : MonoBehaviour
                 return false;
             }
         }
-        currHealth -= dmg;
+        currHealth -= damage;
         if (currHealth <= 0)
         {
             return true;
@@ -53,6 +56,17 @@ public class CharacterCombatStatus : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    //Heals 25% hp
+    public void Heal()
+    {
+        int healthToHeal = maxHealth / 4;
+        currHealth += healthToHeal;
+        if(currHealth > maxHealth)
+        {
+            currHealth = maxHealth;
         }
     }
 

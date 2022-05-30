@@ -46,12 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charName: Enemy Man
-  damage: 10
-  maxHealth: 20
-  currHealth: 20
+  weapon: 0
+  damage: 15
+  maxHealth: 150
+  currHealth: 150
   maxMana: 0
   currMana: 0
   type: 3
+  missChance: 25
 --- !u!1 &5875194892579945194
 GameObject:
   m_ObjectHideFlags: 0
