@@ -17,7 +17,6 @@ public class LevelLoader : MonoBehaviour
 
     public GameObject music;
     public GameObject healthBar;
-    public GameObject manaBar;
 
     public Animator transition;
     public float transitionTime = 1f;
@@ -63,13 +62,11 @@ public class LevelLoader : MonoBehaviour
     {
         music.SetActive(false);
         healthBar.SetActive(false);
-        manaBar.SetActive(false);
     }
 
     public void EnableSceneUI()
     {
         music.SetActive(true);
         healthBar.SetActive(true);
-        manaBar.SetActive(true);
     }
 }
