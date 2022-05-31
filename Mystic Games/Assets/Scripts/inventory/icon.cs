@@ -10,7 +10,7 @@ public class icon : MonoBehaviour
     private void Reset()
     {
         GetComponent<Collider2D>().isTrigger = true;
-        gameObject.layer = 5;
+        gameObject.layer = 3;
     }
     public void Interact(){
 

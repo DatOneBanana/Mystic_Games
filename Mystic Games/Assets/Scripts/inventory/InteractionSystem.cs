@@ -33,8 +33,8 @@ public class InteractionSystem : MonoBehaviour
         {
             if(InteractInput())
             {
-                detectedObject.GetComponent<icon>()?.Interact();
-                                Debug.Log("interact");
+                Debug.Log("interact");
+                detectedObject.GetComponent<icon>().Interact();
 
             }
         }

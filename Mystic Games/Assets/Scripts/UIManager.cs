@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
     public void RestartLevel()
     {
      Debug.Log("clicked");
-      SceneManager.LoadScene(8);
+      SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         
     }
 
