@@ -8,9 +8,9 @@ public class StartText : MonoBehaviour
 
     public void Start()
     {
-        text.SetActive(true);
+        
     }
-
+    
     public void DisableText()
     {
         text.SetActive(false);
