@@ -11,18 +11,27 @@ public class LevelLoader : MonoBehaviour
     void Awake() 
     {
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
     }
     #endregion
 
     public GameObject music;
     public GameObject healthBar;
-
+    public GameObject player;
+    public GameObject tempEnemy;
+    public GameObject gameOver;
+    
     public Animator transition;
     public float transitionTime = 1f;
 
     public void LoadLevel(string sceneName) 
     {
+        StartCoroutine(LoadNamedLevel(sceneName));
+    }
+
+    public void LoadLevel(string sceneName, GameObject enemy) 
+    {
+        tempEnemy = enemy;
         StartCoroutine(LoadNamedLevel(sceneName));
     }
 
@@ -43,6 +52,7 @@ public class LevelLoader : MonoBehaviour
     public void UnloadLevel(string sceneName)
     {
         StartCoroutine(UnloadNamedLevel(sceneName));
+        tempEnemy = null;
     }
 
     IEnumerator UnloadNamedLevel(string sceneName)
@@ -68,5 +78,19 @@ public class LevelLoader : MonoBehaviour
     {
         music.SetActive(true);
         healthBar.SetActive(true);
+        player.GetComponent<Player>().currentHealth = player.GetComponent<CharacterCombatStatus>().currHealth;
+        healthBar.GetComponent<HealthBar>().SetHealth(player.GetComponent<Player>().currentHealth);
+    }
+
+    public void OnRetry()
+    {
+        SceneManager.LoadScene("Brandon");
+    }
+
+    public IEnumerator EnableGameOverMenu()
+    {
+        yield return new WaitForSeconds(transitionTime);
+
+        gameOver.SetActive(true);
     }
 }

@@ -14,6 +14,8 @@ public class Player : MonoBehaviour, ICustomerShop
 
     public int currency = 0;
 
+    public int killCount = 0;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -58,18 +60,65 @@ public class Player : MonoBehaviour, ICustomerShop
     {
         if(other.tag == "Enemy")
         {  
+            killCount++;
             LevelLoader.instance.DisableSceneUI();
-            LevelLoader.instance.LoadLevel("BattleArena");
+            LevelLoader.instance.LoadLevel("BattleArena", other.gameObject);
 
             yield return new WaitForSeconds(2f);
 
             Destroy(other.gameObject);
         }
+        else if(other.tag == "Start Text")
+        {
+            other.gameObject.GetComponent<StartText>().EnableText();
+        }
+        else if(other.tag == "Girl")
+        {
+            other.gameObject.GetComponent<GirlScript>().EnableText();
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.tag == "Invisible Wall")
+        {
+            if(killCount < 10)
+            {
+                other.gameObject.GetComponent<WallScript>().EnableText(killCount);
+            }
+            else
+            {
+                Destroy(other.gameObject);
+            }
+        }
+    }
+
+    public void OnCollisionExit2D(Collision2D other)
+    {
+        if(other.gameObject.tag == "Invisible Wall")
+        {
+            if(killCount < 10)
+            {
+                other.gameObject.GetComponent<WallScript>().DisableText();
+            }
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D other)
+    {
+        if(other.tag == "Start Text")
+        {
+            other.gameObject.GetComponent<StartText>().DisableText();
+        }
+        else if(other.tag == "Girl")
+        {
+            other.gameObject.GetComponent<GirlScript>().DisableText();
+        }
     }
     
     public void SavePlayer()
     {
-        SaveSystem.SavePlayer(this);
+        SaveSystem.SavePlayer(this, this.GetComponent<CharacterCombatStatus>());
     }
 
     public void LoadPlayer()
@@ -79,6 +128,7 @@ public class Player : MonoBehaviour, ICustomerShop
         currentHealth = data.health;
         healthBar.SetHealth(currentHealth);
         currentMana = data.mana;
+        this.GetComponent<CharacterCombatStatus>().currHealth = data.combatHealth;
 
         Vector3 position;
         position.x = data.position[0];

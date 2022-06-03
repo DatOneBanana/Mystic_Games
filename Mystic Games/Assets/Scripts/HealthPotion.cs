@@ -20,6 +20,7 @@ public class HealthPotion : MonoBehaviour
         {
             Destroy(gameObject);
             playerHealth.currentHealth = playerHealth.currentHealth + healthBonus;
+            playerHealth.GetComponent<CharacterCombatStatus>().currHealth = playerHealth.GetComponent<CharacterCombatStatus>().currHealth + healthBonus;
             health.SetHealth(playerHealth.currentHealth);
         }
     }

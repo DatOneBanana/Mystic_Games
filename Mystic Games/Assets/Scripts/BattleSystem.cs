@@ -44,7 +44,9 @@ public class BattleSystem : MonoBehaviour
         Instantiate(playerPrefab, playerBattleLocation);
         playerStat = player.GetComponent<CharacterCombatStatus>();
 
-        GameObject enemy = Instantiate(enemyPrefab, enemyBattleLocation);
+        GameObject enemy = Instantiate(LevelLoader.instance.tempEnemy, enemyBattleLocation);
+        enemy.transform.localPosition = new Vector3(-1f, 0f, 1f);
+        enemy.transform.localScale = new Vector3(8f, 8f, 8f);
         enemyStat = enemy.GetComponent<CharacterCombatStatus>();
 
         dialogueText.text = enemyStat.charName + " approaches for battle.";
@@ -114,13 +116,13 @@ public class BattleSystem : MonoBehaviour
         int roll;
         if(enemyStat.currHealth < 0.5 * enemyStat.maxHealth)
         {
-            roll = Random.Range(1,4);
+            roll = Random.Range(1,5);
             Debug.Log("Enemy chose: " + roll);
-            if(roll == 1)
+            if(roll == 1 || roll == 2)
             {
                 StartCoroutine(EnemyAttack());
             }
-            else if(roll == 2)
+            else if(roll == 3)
             {
                 StartCoroutine(EnemyDefend());
             }
@@ -131,9 +133,9 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            roll = Random.Range(1,3);
+            roll = Random.Range(1,4);
             Debug.Log("Enemy chose: " + roll);
-            if(roll == 1)
+            if(roll == 1 || roll == 2)
             {
                 StartCoroutine(EnemyAttack());
             }
@@ -221,6 +223,8 @@ public class BattleSystem : MonoBehaviour
         else if(state == BattleState.DEFEAT) 
         {
             dialogueText.text = "Defeat!";
+            LevelLoader.instance.UnloadLevel("BattleArena");
+            StartCoroutine(LevelLoader.instance.EnableGameOverMenu());
         }
     }
 
