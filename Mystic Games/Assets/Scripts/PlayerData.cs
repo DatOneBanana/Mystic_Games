@@ -6,13 +6,15 @@ using UnityEngine;
 public class PlayerData
 {
     public int health;
+    public int combatHealth;
     public int mana;
     public float[] position;
 
-    public PlayerData (Player player)
+    public PlayerData (Player player, CharacterCombatStatus playerStats)
     {
         health = player.currentHealth;
         mana = player.currentMana;
+        combatHealth = playerStats.currHealth;
 
         position = new float[3];
         position[0] = player.transform.position.x;
